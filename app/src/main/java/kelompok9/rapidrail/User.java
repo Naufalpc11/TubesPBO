@@ -2,14 +2,11 @@ package kelompok9.rapidrail;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
@@ -62,58 +59,58 @@ public class User {
         return phoneNumber;
     }
 
-    private static final String jsonFilePath = "app/src/main/java/kelompok9/rapidrail/users.json";
+    String filePath = "app/src/main/resources/account.json";
     private static List<User> userList = new ArrayList<>();
-    private static int registrationCount = 0; 
 
-    public static boolean registerUser(String username, String password, String name, String address, String phoneNumber) {
-        if (registrationCount > 3) {
-            System.out.println("Batas registrasi telah tercapai. Tidak dapat melakukan registrasi lagi.");
-            return false;
-        }
-
-        JSONArray jsonArray;
-        if (Files.exists(Paths.get(jsonFilePath))) {
-            try {
-                String jsonString = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-                jsonArray = new JSONArray(jsonString);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject userJson = jsonArray.getJSONObject(i);
-                    if (userJson.getString("username").equals(username)) {
-                        return false;
-                    }
-                }
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } else {
-            jsonArray = new JSONArray();
-        }
-
-        JSONObject newUserJson = new JSONObject();
-        newUserJson.put("username", username);
-        newUserJson.put("password", password);
-        newUserJson.put("name", name);
-        newUserJson.put("address", address);
-        newUserJson.put("phoneNumber", phoneNumber);
-
-        jsonArray.put(newUserJson);
-
-        try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
-            fileWriter.write(jsonArray.toString(4));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+    
+    // Metode untuk menambahkan pengguna baru ke dalam list
+    public static void registerUser(String username, String password, String name, String address, String phoneNumber) {
+        if (isUsernameTaken(username)) {
+            System.out.println("Gagal mendaftar. Username sudah digunakan.");
+            return;
         }
 
         User newUser = new User(username, password, name, address, phoneNumber);
         userList.add(newUser);
-
-        registrationCount++;
-        return true;
+        saveUsersToJson(); // Simpan pengguna ke dalam file JSON setiap kali ada perubahan
+        System.out.println("Registrasi berhasil untuk akun " + username);
     }
 
+
+    // Metode untuk menyimpan data pengguna ke dalam file JSON
+    public static void saveUsersToJson() {
+        JSONArray userArray = new JSONArray();
+
+        for (User user : userList) {
+            JSONObject userData = new JSONObject();
+            userData.put("username", user.getUsername());
+            userData.put("password", user.getPassword());
+            userData.put("name", user.getName());
+            userData.put("address", user.getAddress());
+            userData.put("phoneNumber", user.getPhoneNumber());
+
+            userArray.put(userData);
+        }
+        
+        try (FileWriter file = new FileWriter("account.json")) {
+            // Mengatur opsi indentasi untuk JSON agar lebih terstruktur
+            file.write(userArray.toString(4)); // Angka 4 menunjukkan jumlah spasi indentasi
+
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
+    private static boolean isUsernameTaken(String username) {
+        for (User user : userList) {
+            if (user.getUsername().equals(username)) {
+                return true; // Username sudah digunakan
+            }
+        }
+        return false; // Username tersedia
+    }
     public static boolean loginUser(String username, String password) {
         for (User user : userList) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -140,22 +137,6 @@ public class User {
         return false;
     }
 
-    private static void saveUsersToJson() {
-        JSONArray jsonArray = new JSONArray();
-        for (User user : userList) {
-            JSONObject userJson = new JSONObject();
-            userJson.put("username", user.getUsername());
-            userJson.put("password", user.getPassword());
-            userJson.put("name", user.getName());
-            userJson.put("address", user.getAddress());
-            userJson.put("phoneNumber", user.getPhoneNumber());
-            jsonArray.put(userJson);
-        }
-
-        try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
-            fileWriter.write(jsonArray.toString(4));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    
     }
-}
+
