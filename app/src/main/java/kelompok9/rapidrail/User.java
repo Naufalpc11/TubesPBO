@@ -62,8 +62,6 @@ public class User {
     String filePath = "app/src/main/resources/account.json";
     private static List<User> userList = new ArrayList<>();
 
-    
-    // Metode untuk menambahkan pengguna baru ke dalam list
     public static void registerUser(String username, String password, String name, String address, String phoneNumber) {
         if (isUsernameTaken(username)) {
             System.out.println("Gagal mendaftar. Username sudah digunakan.");
@@ -72,12 +70,10 @@ public class User {
 
         User newUser = new User(username, password, name, address, phoneNumber);
         userList.add(newUser);
-        saveUsersToJson(); // Simpan pengguna ke dalam file JSON setiap kali ada perubahan
+        saveUsersToJson(); 
         System.out.println("Registrasi berhasil untuk akun " + username);
     }
 
-
-    // Metode untuk menyimpan data pengguna ke dalam file JSON
     public static void saveUsersToJson() {
         JSONArray userArray = new JSONArray();
 
@@ -93,23 +89,20 @@ public class User {
         }
         
         try (FileWriter file = new FileWriter("account.json")) {
-            // Mengatur opsi indentasi untuk JSON agar lebih terstruktur
-            file.write(userArray.toString(4)); // Angka 4 menunjukkan jumlah spasi indentasi
-
+            file.write(userArray.toString(4));
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    
     }
     
     private static boolean isUsernameTaken(String username) {
         for (User user : userList) {
             if (user.getUsername().equals(username)) {
-                return true; // Username sudah digunakan
+                return true;
             }
         }
-        return false; // Username tersedia
+        return false;
     }
     public static boolean loginUser(String username, String password) {
         for (User user : userList) {
@@ -136,7 +129,5 @@ public class User {
         System.out.println("Akun " + username + " tidak ditemukan.");
         return false;
     }
-
-    
     }
 
