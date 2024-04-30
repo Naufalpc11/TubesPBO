@@ -53,7 +53,6 @@ public class App extends Application {
             boolean loginSuccess = User.loginUser(username, password);
             if (loginSuccess) {
                 System.out.println("Login berhasil!");
-                // Tambahkan logika untuk menampilkan halaman setelah login berhasil
             } else {
                 System.out.println("Username atau password salah.");
             }
