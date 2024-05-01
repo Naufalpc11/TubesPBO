@@ -3,21 +3,21 @@ package kelompok9.rapidrail;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class App extends Application {
-
+    private static final String filePath = "D:/Semester 2/PBO/Praktikum/TubesPBO/app/account.json";
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("RapidRail");
+        User.loadUsersFromJson(filePath);
 
         Pane loginPane = createLoginPane(primaryStage);
-
         Scene loginScene = new Scene(loginPane, 1200, 700);
-
         primaryStage.setScene(loginScene);
         primaryStage.show();
     }
@@ -47,24 +47,35 @@ public class App extends Application {
         registerButton.setLayoutY(450);
         registerButton.setPrefWidth(300);
 
+        Button deleteButton = new Button("Delete Account");
+        deleteButton.setLayoutX(450);
+        deleteButton.setLayoutY(500);
+        deleteButton.setPrefWidth(300);
+
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
             boolean loginSuccess = User.loginUser(username, password);
             if (loginSuccess) {
                 System.out.println("Login berhasil!");
+                Pane selectTrainServicePane = createSelectTrainService(primaryStage);
+                Scene selectTrainServiceScene = new Scene(selectTrainServicePane, 1200, 700);
+                primaryStage.setScene(selectTrainServiceScene);
             } else {
                 System.out.println("Username atau password salah.");
             }
         });
-
         registerButton.setOnAction(e -> {
             Pane registrationPane = createRegistrationPane(primaryStage);
             Scene registrationScene = new Scene(registrationPane, 1200, 700);
             primaryStage.setScene(registrationScene);
         });
-
-        loginPane.getChildren().addAll(usernameField, passwordField, loginButton, registerButton);
+        deleteButton.setOnAction(e -> {
+            Pane deleteAccouPane = createDeleteAccountPane(primaryStage);
+            Scene deleteAccountScene = new Scene(deleteAccouPane, 1200, 700);
+            primaryStage.setScene(deleteAccountScene);
+        });
+        loginPane.getChildren().addAll(usernameField, passwordField, loginButton, registerButton, deleteButton);
         return loginPane;
     }
 
@@ -133,7 +144,49 @@ public class App extends Application {
         registrationPane.getChildren().addAll(newUsernameField, newPasswordField, newNameField, newAddressField, newPhoneField, backButton, registerButton);
         return registrationPane;
     }
+    private Pane createDeleteAccountPane(Stage primaryStage) {
+        Pane deleteAccountPane = new Pane();
 
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Enter the Username want to delete");
+        usernameField.setLayoutX(450);
+        usernameField.setLayoutY(350);
+        usernameField.setPrefWidth(300);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setLayoutX(450);
+        deleteButton.setLayoutY(400);
+        deleteButton.setPrefWidth(300);
+
+        Button backButton = new Button("Back");
+        backButton.setLayoutX(450);
+        backButton.setLayoutY(450);
+        backButton.setPrefWidth(300);
+
+        deleteButton.setOnAction(e -> {
+            String username = usernameField.getText();
+            User.deleteUser(username);
+        });
+        backButton.setOnAction(e -> {
+            Pane loginPane = createLoginPane(primaryStage);
+            Scene loginScene = new Scene(loginPane, 1200, 700);
+            primaryStage.setScene(loginScene);
+        });
+        deleteAccountPane.getChildren().addAll(usernameField, deleteButton, backButton);
+        return deleteAccountPane;
+    }
+
+    private Pane createSelectTrainService(Stage primaryStage) {
+        Pane selectTrainServicePane = new Pane();
+
+        Label titleLabel = new Label("Welcome to RapidRail");
+        titleLabel.setText("RapidRail Application");
+        titleLabel.setLayoutX(50);
+        titleLabel.setLayoutY(50);
+
+        selectTrainServicePane.getChildren().add(titleLabel);
+        return selectTrainServicePane;
+    }
     public static void main(String[] args) {
         launch(args);
     }
