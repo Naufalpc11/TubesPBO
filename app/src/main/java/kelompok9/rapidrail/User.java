@@ -1,5 +1,6 @@
 package kelompok9.rapidrail;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class User {
     String username;
@@ -59,18 +62,35 @@ public class User {
         return phoneNumber;
     }
 
-    String filePath = "app/src/main/resources/account.json";
+    String filePath = "D:/Semester 2/PBO/Praktikum/TubesPBO/app/account.json";
     private static List<User> userList = new ArrayList<>();
 
+    public static void loadUsersFromJson(String filePath) {
+        try (FileReader reader = new FileReader(filePath)) {
+            JSONArray userArray = new JSONArray(new JSONTokener(reader));
+            for (Object obj : userArray) {
+                JSONObject userData = (JSONObject) obj;
+                String username = userData.getString("username");
+                String password = userData.getString("password");
+                String name = userData.getString("name");
+                String address = userData.getString("address");
+                String phoneNumber = userData.getString("phoneNumber");
+
+                User user = new User(username, password, name, address, phoneNumber);
+                userList.add(user);
+            }
+        } catch (IOException | JSONException e) {
+            System.err.println("Error loading user data: " + e.getMessage());
+        }
+    }
     public static void registerUser(String username, String password, String name, String address, String phoneNumber) {
         if (isUsernameTaken(username)) {
             System.out.println("Gagal mendaftar. Username sudah digunakan.");
             return;
         }
-
         User newUser = new User(username, password, name, address, phoneNumber);
         userList.add(newUser);
-        saveUsersToJson(); 
+        saveUsersToJson();
         System.out.println("Registrasi berhasil untuk akun " + username);
     }
 
@@ -115,19 +135,21 @@ public class User {
         return false;
     }
 
-    public static boolean deleteUser(String username) {
+    public static boolean deleteUser(String usernameToDelete) {
         Iterator<User> iterator = userList.iterator();
         while (iterator.hasNext()) {
             User user = iterator.next();
-            if (user.getUsername().equals(username)) {
+            if (user.getUsername().equals(usernameToDelete)) {
                 iterator.remove();
-                System.out.println("Akun " + username + " berhasil dihapus.");
+                System.out.println("Akun " + usernameToDelete + " berhasil dihapus.");
                 saveUsersToJson();
                 return true;
             }
         }
-        System.out.println("Akun " + username + " tidak ditemukan.");
+        System.out.println("Akun " + usernameToDelete + " tidak ditemukan.");
         return false;
     }
+
+    
     }
 
