@@ -5,8 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -16,10 +18,12 @@ public class App extends Application {
         primaryStage.setTitle("RapidRail");
         User.loadUsersFromJson(filePath);
 
+        primaryStage.setResizable(false);
         Pane loginPane = createLoginPane(primaryStage);
         Scene loginScene = new Scene(loginPane, 1200, 700);
         primaryStage.setScene(loginScene);
         primaryStage.show();
+
     }
 
     private Pane createLoginPane(Stage primaryStage) {
@@ -178,14 +182,45 @@ public class App extends Application {
 
     private Pane createSelectTrainService(Stage primaryStage) {
         Pane selectTrainServicePane = new Pane();
-
+        
         Label titleLabel = new Label("Welcome to RapidRail");
-        titleLabel.setText("RapidRail Application");
-        titleLabel.setLayoutX(50);
-        titleLabel.setLayoutY(50);
+        titleLabel.setFont(new Font("Arial", 40));
+        titleLabel.setStyle("-fx-font-weight: bold;");
+        titleLabel.setLayoutX(400);
+        titleLabel.setLayoutY(60);
 
-        selectTrainServicePane.getChildren().add(titleLabel);
+        Button lrtButton = new Button("LRT");
+        lrtButton.setLayoutX(80);
+        lrtButton.setLayoutY(400);
+        lrtButton.setPrefWidth(500);
+        lrtButton.setPrefHeight(200);
+
+        Button bandaraButton = new Button("Bandara");
+        bandaraButton.setLayoutX(620);
+        bandaraButton.setLayoutY(400);
+        bandaraButton.setPrefWidth(500);
+        bandaraButton.setPrefHeight(200);
+
+        Button mrtButton = new Button("MRT");
+        mrtButton.setLayoutX(80);
+        mrtButton.setLayoutY(630);
+        mrtButton.setPrefWidth(500);
+        mrtButton.setPrefHeight(200);
+
+        Button lokalButton = new Button("Lokal");
+        lokalButton.setLayoutX(620);
+        lokalButton.setLayoutY(630);
+        lokalButton.setPrefWidth(500);
+        lokalButton.setPrefHeight(200);
+
+        selectTrainServicePane.getChildren().addAll(titleLabel, lrtButton, bandaraButton, mrtButton, lokalButton);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(selectTrainServicePane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
         return selectTrainServicePane;
+        
     }
     public static void main(String[] args) {
         launch(args);
