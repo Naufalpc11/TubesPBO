@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import javafx.scene.control.Alert;
+
 public class User {
     String username;
     String password;
@@ -85,18 +87,25 @@ public class User {
     }
     public static void registerUser(String username, String password, String name, String address, String phoneNumber) {
         if (isUsernameTaken(username)) {
-            System.out.println("Gagal mendaftar. Username sudah digunakan.");
+            Alert usIsTaken = new Alert(Alert.AlertType.ERROR);
+            usIsTaken.setTitle("Error");
+            usIsTaken.setHeaderText(null);
+            usIsTaken.setContentText("Password harus minimal 8 karakter");
+            usIsTaken.showAndWait();
             return;
+        } else {
+            User newUser = new User(username, password, name, address, phoneNumber);
+            userList.add(newUser);
+            saveUsersToJson();
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Registrasi Berhasil");
+            success.setHeaderText(null);
+            success.setContentText("Registrasi berhasil untuk pengguna: " + username);
+            success.showAndWait();
         }
-        User newUser = new User(username, password, name, address, phoneNumber);
-        userList.add(newUser);
-        saveUsersToJson();
-        System.out.println("Registrasi berhasil untuk akun " + username);
     }
-
     public static void saveUsersToJson() {
         JSONArray userArray = new JSONArray();
-
         for (User user : userList) {
             JSONObject userData = new JSONObject();
             userData.put("username", user.getUsername());
@@ -104,10 +113,8 @@ public class User {
             userData.put("name", user.getName());
             userData.put("address", user.getAddress());
             userData.put("phoneNumber", user.getPhoneNumber());
-
             userArray.put(userData);
         }
-        
         try (FileWriter file = new FileWriter("account.json")) {
             file.write(userArray.toString(4));
             file.flush();
@@ -131,7 +138,11 @@ public class User {
                 return true;
             }
         }
-        System.out.println("Username atau password salah.");
+        Alert uorpWrong = new Alert(Alert.AlertType.ERROR);
+        uorpWrong.setTitle("Error");
+        uorpWrong.setHeaderText(null);
+        uorpWrong.setContentText("Incorrect username or password");
+        uorpWrong.showAndWait();
         return false;
     }
 
@@ -141,12 +152,21 @@ public class User {
             User user = iterator.next();
             if (user.getUsername().equals(usernameToDelete)) {
                 iterator.remove();
-                System.out.println("Akun " + usernameToDelete + " berhasil dihapus.");
+                Alert delsuc = new Alert(Alert.AlertType.ERROR);
+                delsuc.setTitle("Error");
+                delsuc.setHeaderText(null);
+                delsuc.setContentText("Account Delete Succesfully");
+                delsuc.showAndWait();
                 saveUsersToJson();
                 return true;
+            } else {
+                Alert undel = new Alert(Alert.AlertType.ERROR);
+                undel.setTitle("Error");
+                undel.setHeaderText(null);
+                undel.setContentText("Username not Found!");
+                undel.showAndWait();
+                return true;}
             }
-        }
-        System.out.println("Akun " + usernameToDelete + " tidak ditemukan.");
         return false;
     }
 
