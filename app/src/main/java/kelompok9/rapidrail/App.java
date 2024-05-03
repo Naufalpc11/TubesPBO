@@ -1,17 +1,23 @@
 package kelompok9.rapidrail;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    
     private static final String filePath = "D:/Semester 2/PBO/Praktikum/TubesPBO/app/account.json";
     @Override
     public void start(Stage primaryStage) {
@@ -62,7 +68,7 @@ public class App extends Application {
             boolean loginSuccess = User.loginUser(username, password);
             if (loginSuccess) {
                 System.out.println("Login berhasil!");
-                Pane selectTrainServicePane = createSelectTrainService(primaryStage);
+                ScrollPane selectTrainServicePane = createSelectTrainService(primaryStage);
                 Scene selectTrainServiceScene = new Scene(selectTrainServicePane, 1200, 700);
                 primaryStage.setScene(selectTrainServiceScene);
             } else {
@@ -138,8 +144,23 @@ public class App extends Application {
             String name = newNameField.getText();
             String address = newAddressField.getText();
             String phoneNumber = newPhoneField.getText();
+            if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty() || phoneNumber.isEmpty()) {
+                Alert empty = new Alert(Alert.AlertType.ERROR);
+                empty.setTitle("Error");
+                empty.setHeaderText(null);
+                empty.setContentText("Please complete all fields to register");
+                empty.showAndWait();
+                return;
+            } else if (password.length() < 8) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Password must be at least 8 characters");
+                alert.showAndWait();
+                return;
+            } else {
             User.registerUser(username, password, name, address, phoneNumber);
-
+            }
             Pane loginPane = createLoginPane(primaryStage);
             Scene loginScene = new Scene(loginPane, 1200, 700);
             primaryStage.setScene(loginScene);
@@ -180,47 +201,59 @@ public class App extends Application {
         return deleteAccountPane;
     }
 
-    private Pane createSelectTrainService(Stage primaryStage) {
-        Pane selectTrainServicePane = new Pane();
-        
-        Label titleLabel = new Label("Welcome to RapidRail");
-        titleLabel.setFont(new Font("Arial", 40));
-        titleLabel.setStyle("-fx-font-weight: bold;");
-        titleLabel.setLayoutX(400);
-        titleLabel.setLayoutY(60);
+    private ScrollPane createSelectTrainService(Stage primaryStage) {
+        VBox selectTrainServiceVBox = new VBox(); // Menggunakan VBox sebagai kontainer
+        selectTrainServiceVBox.setSpacing(20);
+        selectTrainServiceVBox.setAlignment(Pos.CENTER);
+
+        Label titleRR = new Label("Welcome to RapidRail");
+        titleRR.setFont(new Font("Arial", 55));
+        titleRR.setStyle("-fx-font-weight: bold;");
+        titleRR.setPrefWidth(600);
+        titleRR.setPrefHeight(80);
+
+        Label mottoRR = new Label("Speed and Convenience in Every Step");
+        mottoRR.setFont(new Font("Arial", 30));
+        mottoRR.setStyle("-fx-font-weight: bold;");
+        mottoRR.setPrefWidth(600);
+        mottoRR.setPrefHeight(100);
 
         Button lrtButton = new Button("LRT");
-        lrtButton.setLayoutX(80);
-        lrtButton.setLayoutY(400);
         lrtButton.setPrefWidth(500);
         lrtButton.setPrefHeight(200);
+        lrtButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         Button bandaraButton = new Button("Bandara");
-        bandaraButton.setLayoutX(620);
-        bandaraButton.setLayoutY(400);
         bandaraButton.setPrefWidth(500);
         bandaraButton.setPrefHeight(200);
+        bandaraButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         Button mrtButton = new Button("MRT");
-        mrtButton.setLayoutX(80);
-        mrtButton.setLayoutY(630);
         mrtButton.setPrefWidth(500);
         mrtButton.setPrefHeight(200);
-
+        mrtButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        
         Button lokalButton = new Button("Lokal");
-        lokalButton.setLayoutX(620);
-        lokalButton.setLayoutY(630);
         lokalButton.setPrefWidth(500);
         lokalButton.setPrefHeight(200);
+        lokalButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
-        selectTrainServicePane.getChildren().addAll(titleLabel, lrtButton, bandaraButton, mrtButton, lokalButton);
+
+        HBox row1 = new HBox(20, lrtButton, bandaraButton);
+        HBox row2 = new HBox(20, mrtButton, lokalButton);
+
+        row1.setAlignment(Pos.CENTER);
+        row2.setAlignment(Pos.CENTER);
+
+        selectTrainServiceVBox.getChildren().addAll(titleRR, mottoRR, row1, row2);
+
+    // Membuat ScrollPane dan mengatur kontennya dengan VBox
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(selectTrainServicePane);
+        scrollPane.setContent(selectTrainServiceVBox);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
-        return selectTrainServicePane;
-        
+        return scrollPane;
     }
     public static void main(String[] args) {
         launch(args);
