@@ -1,12 +1,12 @@
 package kelompok9.rapidrail;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -76,7 +76,7 @@ public class App extends Application {
             String password = passwordField.getText();
             boolean loginSuccess = User.loginUser(username, password);
             if (loginSuccess) {
-                ScrollPane selectTrainServicePane = createSelectTrainService(primaryStage);
+                Pane selectTrainServicePane = createSelectTrainService(primaryStage);
                 Scene selectTrainServiceScene = new Scene(selectTrainServicePane, 1200, 700);
                 primaryStage.setScene(selectTrainServiceScene);
             }
@@ -222,15 +222,19 @@ public class App extends Application {
         return deleteAccountPane;
     }
 
-    private ScrollPane createSelectTrainService(Stage primaryStage) {
+    private Pane createSelectTrainService(Stage primaryStage) {
         VBox selectTrainServiceVBox = new VBox();
-        selectTrainServiceVBox.setSpacing(20);
-        selectTrainServiceVBox.setAlignment(Pos.CENTER);
+        selectTrainServiceVBox.setSpacing(40);
+        selectTrainServiceVBox.setAlignment(Pos.BOTTOM_CENTER);
 
         Button lrtButton = new Button("LRT");
-        lrtButton.setPrefWidth(500);
-        lrtButton.setPrefHeight(200);
+        lrtButton.setPrefSize(150, 150);
         lrtButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        lrtButton.setStyle("-fx-background-radius: 75em; " + 
+                            "-fx-min-width: 150px; " + 
+                            "-fx-min-height: 150px; " + 
+                            "-fx-max-width: 150px; " + 
+                            "-fx-max-height: 150px;");
         lrtButton.setOnAction(e -> {
             Pane trainLRTPane = createTrainLRT(primaryStage);
             Scene trainLokalScene = new Scene(trainLRTPane, 1200, 700);
@@ -238,18 +242,25 @@ public class App extends Application {
         });
 
         Button bandaraButton = new Button("Bandara");
-        bandaraButton.setPrefWidth(500);
-        bandaraButton.setPrefHeight(200);
+        bandaraButton.setPrefSize(150, 150);
         bandaraButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        bandaraButton.setStyle("-fx-background-radius: 75em; " + 
+                                "-fx-min-width: 150px; " + 
+                                "-fx-min-height: 150px; " + 
+                                "-fx-max-width: 150px; " + 
+                                "-fx-max-height: 150px;");
         bandaraButton.setOnAction(e -> {
             Pane trainBandaraPane = createTrainBandara(primaryStage);
             Scene trainLokalScene = new Scene(trainBandaraPane, 1200, 700);
             primaryStage.setScene(trainLokalScene);
         });
-
         Button mrtButton = new Button("MRT");
-        mrtButton.setPrefWidth(500);
-        mrtButton.setPrefHeight(200);
+        mrtButton.setPrefSize(150, 150);
+        mrtButton.setStyle("-fx-background-radius: 75em; " + 
+                            "-fx-min-width: 150px; " + 
+                            "-fx-min-height: 150px; " + 
+                            "-fx-max-width: 150px; " + 
+                            "-fx-max-height: 150px;");
         mrtButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         mrtButton.setOnAction(e -> {
             Pane trainMRTPane = createTrainMRT(primaryStage);
@@ -257,27 +268,44 @@ public class App extends Application {
             primaryStage.setScene(trainLokalScene);
         });
         Button lokalButton = new Button("Lokal");
-        lokalButton.setPrefWidth(500);
-        lokalButton.setPrefHeight(200);
+        lokalButton.setPrefSize(150, 150);
+        lokalButton.setStyle("-fx-background-radius: 75em; " + 
+                                "-fx-min-width: 150px; " + 
+                                "-fx-min-height: 150px; " + 
+                                "-fx-max-width: 150px; " + 
+                                "-fx-max-height: 150px;");
         lokalButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         lokalButton.setOnAction(e -> {
             Pane trainLokalPane = createTrainLokal(primaryStage);
             Scene trainLokalScene = new Scene(trainLokalPane, 1200, 700);
             primaryStage.setScene(trainLokalScene);
         });
-        HBox row1 = new HBox(20, lrtButton, bandaraButton);
-        HBox row2 = new HBox(20, mrtButton, lokalButton);
+        Button logOut = new Button("log Out");
+        logOut.setPrefSize(150, 150);
+        logOut.setStyle("-fx-background-radius: 75em; " + 
+                                "-fx-min-width: 150px; " + 
+                                "-fx-min-height: 150px; " + 
+                                "-fx-max-width: 150px; " + 
+                                "-fx-max-height: 150px;");
+        logOut.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Button aboutUs = new Button("?");
+        aboutUs.setPrefSize(150, 150);
+        aboutUs.setStyle("-fx-background-radius: 75em; " + 
+                                "-fx-min-width: 150px; " + 
+                                "-fx-min-height: 150px; " + 
+                                "-fx-max-width: 150px; " + 
+                                "-fx-max-height: 150px;");
+                                aboutUs.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        HBox row1 = new HBox(40, lrtButton, bandaraButton, mrtButton, lokalButton);
+        HBox row2 = new HBox(40, logOut, aboutUs);
 
         row1.setAlignment(Pos.CENTER);
         row2.setAlignment(Pos.CENTER);
-        selectTrainServiceVBox.getChildren().addAll( row1, row2);
+        selectTrainServiceVBox.getChildren().addAll(row1, row2);
+        Insets margin = new Insets(0, 0, 50, 0); 
+        VBox.setMargin(row2, margin);
 
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(selectTrainServiceVBox);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-
-        return scrollPane;
+        return selectTrainServiceVBox;
     }
 
     private Pane createTrainLRT(Stage primaryStage) {
