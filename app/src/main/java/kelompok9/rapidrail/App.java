@@ -5,10 +5,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -34,34 +35,42 @@ public class App extends Application {
 
     private Pane createLoginPane(Stage primaryStage) {
         Pane loginPane = new Pane();
-        
+    
+        // Tambahkan gambar latar belakang
+        Image backgroundImage = new Image(getClass().getResource("/desainRR.jpg").toExternalForm());
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(1200);
+        backgroundImageView.setFitHeight(700);
+        loginPane.getChildren().add(backgroundImageView);
+    
+        // Tambahkan elemen-elemen lain setelah gambar latar belakang
         TextField usernameField = new TextField();
         usernameField.setPromptText("Username");
         usernameField.setLayoutX(450);
         usernameField.setLayoutY(300);
         usernameField.setPrefWidth(300);
-
+    
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Password");
         passwordField.setLayoutX(450);
         passwordField.setLayoutY(350);
         passwordField.setPrefWidth(300);
-
+    
         Button loginButton = new Button("Login");
         loginButton.setLayoutX(450);
         loginButton.setLayoutY(400);
         loginButton.setPrefWidth(300);
-
+    
         Button registerButton = new Button("Register");
         registerButton.setLayoutX(450);
         registerButton.setLayoutY(450);
         registerButton.setPrefWidth(300);
-
+    
         Button deleteButton = new Button("Delete Account");
         deleteButton.setLayoutX(450);
         deleteButton.setLayoutY(500);
         deleteButton.setPrefWidth(300);
-
+    
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
@@ -81,17 +90,27 @@ public class App extends Application {
             primaryStage.setScene(registrationScene);
         });
         deleteButton.setOnAction(e -> {
-            Pane deleteAccouPane = createDeleteAccountPane(primaryStage);
-            Scene deleteAccountScene = new Scene(deleteAccouPane, 1200, 700);
+            Pane deleteAccountPane = createDeleteAccountPane(primaryStage);
+            Scene deleteAccountScene = new Scene(deleteAccountPane, 1200, 700);
             primaryStage.setScene(deleteAccountScene);
         });
+    
+        // Tambahkan elemen-elemen ke loginPane setelah gambar latar belakang
         loginPane.getChildren().addAll(usernameField, passwordField, loginButton, registerButton, deleteButton);
+    
         return loginPane;
     }
+    
 
     private Pane createRegistrationPane(Stage primaryStage) {
         Pane registrationPane = new Pane();
         
+        Image backgroundImage = new Image(getClass().getResource("/desainRR.jpg").toExternalForm());
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(1200);
+        backgroundImageView.setFitHeight(700);
+        registrationPane.getChildren().add(backgroundImageView);
+
         TextField newUsernameField = new TextField();
         newUsernameField.setPromptText("Username");
         newUsernameField.setLayoutX(450);
@@ -172,6 +191,12 @@ public class App extends Application {
     private Pane createDeleteAccountPane(Stage primaryStage) {
         Pane deleteAccountPane = new Pane();
 
+        Image backgroundImage = new Image(getClass().getResource("/desainRR.jpg").toExternalForm());
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(1200);
+        backgroundImageView.setFitHeight(700);
+        deleteAccountPane.getChildren().add(backgroundImageView);
+
         TextField usernameField = new TextField();
         usernameField.setPromptText("Enter the Username want to delete");
         usernameField.setLayoutX(450);
@@ -206,18 +231,6 @@ public class App extends Application {
         selectTrainServiceVBox.setSpacing(20);
         selectTrainServiceVBox.setAlignment(Pos.CENTER);
 
-        Label titleRR = new Label("Welcome to RapidRail");
-        titleRR.setFont(new Font("Arial", 55));
-        titleRR.setStyle("-fx-font-weight: bold;");
-        titleRR.setPrefWidth(600);
-        titleRR.setPrefHeight(80);
-
-        Label mottoRR = new Label("Speed and Convenience in Every Step");
-        mottoRR.setFont(new Font("Arial", 30));
-        mottoRR.setStyle("-fx-font-weight: bold;");
-        mottoRR.setPrefWidth(600);
-        mottoRR.setPrefHeight(100);
-
         Button lrtButton = new Button("LRT");
         lrtButton.setPrefWidth(500);
         lrtButton.setPrefHeight(200);
@@ -245,7 +258,7 @@ public class App extends Application {
         row1.setAlignment(Pos.CENTER);
         row2.setAlignment(Pos.CENTER);
 
-        selectTrainServiceVBox.getChildren().addAll(titleRR, mottoRR, row1, row2);
+        selectTrainServiceVBox.getChildren().addAll( row1, row2);
 
     // Membuat ScrollPane dan mengatur kontennya dengan VBox
         ScrollPane scrollPane = new ScrollPane();
