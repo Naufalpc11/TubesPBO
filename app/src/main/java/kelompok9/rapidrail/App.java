@@ -76,12 +76,9 @@ public class App extends Application {
             String password = passwordField.getText();
             boolean loginSuccess = User.loginUser(username, password);
             if (loginSuccess) {
-                System.out.println("Login berhasil!");
                 ScrollPane selectTrainServicePane = createSelectTrainService(primaryStage);
                 Scene selectTrainServiceScene = new Scene(selectTrainServicePane, 1200, 700);
                 primaryStage.setScene(selectTrainServiceScene);
-            } else {
-                System.out.println("Username atau password salah.");
             }
         });
         registerButton.setOnAction(e -> {
@@ -94,8 +91,7 @@ public class App extends Application {
             Scene deleteAccountScene = new Scene(deleteAccountPane, 1200, 700);
             primaryStage.setScene(deleteAccountScene);
         });
-    
-        // Tambahkan elemen-elemen ke loginPane setelah gambar latar belakang
+
         loginPane.getChildren().addAll(usernameField, passwordField, loginButton, registerButton, deleteButton);
     
         return loginPane;
@@ -227,7 +223,7 @@ public class App extends Application {
     }
 
     private ScrollPane createSelectTrainService(Stage primaryStage) {
-        VBox selectTrainServiceVBox = new VBox(); // Menggunakan VBox sebagai kontainer
+        VBox selectTrainServiceVBox = new VBox();
         selectTrainServiceVBox.setSpacing(20);
         selectTrainServiceVBox.setAlignment(Pos.CENTER);
 
@@ -235,38 +231,77 @@ public class App extends Application {
         lrtButton.setPrefWidth(500);
         lrtButton.setPrefHeight(200);
         lrtButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        lrtButton.setOnAction(e -> {
+            Pane trainLRTPane = createTrainLRT(primaryStage);
+            Scene trainLokalScene = new Scene(trainLRTPane, 1200, 700);
+            primaryStage.setScene(trainLokalScene);
+        });
 
         Button bandaraButton = new Button("Bandara");
         bandaraButton.setPrefWidth(500);
         bandaraButton.setPrefHeight(200);
         bandaraButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        bandaraButton.setOnAction(e -> {
+            Pane trainBandaraPane = createTrainBandara(primaryStage);
+            Scene trainLokalScene = new Scene(trainBandaraPane, 1200, 700);
+            primaryStage.setScene(trainLokalScene);
+        });
 
         Button mrtButton = new Button("MRT");
         mrtButton.setPrefWidth(500);
         mrtButton.setPrefHeight(200);
         mrtButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        
+        mrtButton.setOnAction(e -> {
+            Pane trainMRTPane = createTrainMRT(primaryStage);
+            Scene trainLokalScene = new Scene(trainMRTPane, 1200, 700);
+            primaryStage.setScene(trainLokalScene);
+        });
         Button lokalButton = new Button("Lokal");
         lokalButton.setPrefWidth(500);
         lokalButton.setPrefHeight(200);
         lokalButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-
-
+        lokalButton.setOnAction(e -> {
+            Pane trainLokalPane = createTrainLokal(primaryStage);
+            Scene trainLokalScene = new Scene(trainLokalPane, 1200, 700);
+            primaryStage.setScene(trainLokalScene);
+        });
         HBox row1 = new HBox(20, lrtButton, bandaraButton);
         HBox row2 = new HBox(20, mrtButton, lokalButton);
 
         row1.setAlignment(Pos.CENTER);
         row2.setAlignment(Pos.CENTER);
-
         selectTrainServiceVBox.getChildren().addAll( row1, row2);
 
-    // Membuat ScrollPane dan mengatur kontennya dengan VBox
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(selectTrainServiceVBox);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
         return scrollPane;
+    }
+
+    private Pane createTrainLRT(Stage primaryStage) {
+        Pane trainLokal = new Pane();
+
+        return trainLokal;
+    }
+
+    private Pane createTrainBandara(Stage primaryStage) {
+        Pane trainLokal = new Pane();
+
+        return trainLokal;
+    }
+
+    private Pane createTrainMRT(Stage primaryStage) {
+        Pane trainLokal = new Pane();
+
+        return trainLokal;
+    }
+
+    private Pane createTrainLokal(Stage primaryStage) {
+        Pane trainLokal = new Pane();
+
+        return trainLokal;
     }
     public static void main(String[] args) {
         launch(args);
