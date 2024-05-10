@@ -36,15 +36,13 @@ public class App extends Application {
     private Pane createLoginPane(Stage primaryStage) {
         Pane loginPane = new Pane();
     
-        // Tambahkan gambar latar belakang
         Image backgroundImage = new Image(getClass().getResource("/desainRR.jpg").toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(1200);
         backgroundImageView.setFitHeight(700);
         loginPane.getChildren().add(backgroundImageView);
-    
-        // Tambahkan elemen-elemen lain setelah gambar latar belakang
         TextField usernameField = new TextField();
+        
         usernameField.setPromptText("Username");
         usernameField.setLayoutX(450);
         usernameField.setLayoutY(300);
@@ -224,6 +222,13 @@ public class App extends Application {
 
     private Pane createSelectTrainService(Stage primaryStage) {
         VBox selectTrainServiceVBox = new VBox();
+        
+        Image backgroundImage = new Image(getClass().getResource("/menuBackground.jpg").toExternalForm());
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(1200);
+        backgroundImageView.setFitHeight(700);
+        backgroundImageView.setPreserveRatio(true);
+
         selectTrainServiceVBox.setSpacing(40);
         selectTrainServiceVBox.setAlignment(Pos.BOTTOM_CENTER);
 
@@ -241,19 +246,6 @@ public class App extends Application {
             primaryStage.setScene(trainLokalScene);
         });
 
-        Button bandaraButton = new Button("Bandara");
-        bandaraButton.setPrefSize(150, 150);
-        bandaraButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        bandaraButton.setStyle("-fx-background-radius: 75em; " + 
-                                "-fx-min-width: 150px; " + 
-                                "-fx-min-height: 150px; " + 
-                                "-fx-max-width: 150px; " + 
-                                "-fx-max-height: 150px;");
-        bandaraButton.setOnAction(e -> {
-            Pane trainBandaraPane = createTrainBandara(primaryStage);
-            Scene trainLokalScene = new Scene(trainBandaraPane, 1200, 700);
-            primaryStage.setScene(trainLokalScene);
-        });
         Button mrtButton = new Button("MRT");
         mrtButton.setPrefSize(150, 150);
         mrtButton.setStyle("-fx-background-radius: 75em; " + 
@@ -267,19 +259,6 @@ public class App extends Application {
             Scene trainLokalScene = new Scene(trainMRTPane, 1200, 700);
             primaryStage.setScene(trainLokalScene);
         });
-        Button lokalButton = new Button("Lokal");
-        lokalButton.setPrefSize(150, 150);
-        lokalButton.setStyle("-fx-background-radius: 75em; " + 
-                                "-fx-min-width: 150px; " + 
-                                "-fx-min-height: 150px; " + 
-                                "-fx-max-width: 150px; " + 
-                                "-fx-max-height: 150px;");
-        lokalButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        lokalButton.setOnAction(e -> {
-            Pane trainLokalPane = createTrainLokal(primaryStage);
-            Scene trainLokalScene = new Scene(trainLokalPane, 1200, 700);
-            primaryStage.setScene(trainLokalScene);
-        });
         Button logOut = new Button("log Out");
         logOut.setPrefSize(150, 150);
         logOut.setStyle("-fx-background-radius: 75em; " + 
@@ -288,6 +267,11 @@ public class App extends Application {
                                 "-fx-max-width: 150px; " + 
                                 "-fx-max-height: 150px;");
         logOut.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        logOut.setOnAction(e -> {
+            Pane loginPane = createLoginPane(primaryStage);
+            Scene loginScene = new Scene(loginPane, 1200, 700);
+            primaryStage.setScene(loginScene);
+        });
         Button aboutUs = new Button("?");
         aboutUs.setPrefSize(150, 150);
         aboutUs.setStyle("-fx-background-radius: 75em; " + 
@@ -296,15 +280,15 @@ public class App extends Application {
                                 "-fx-max-width: 150px; " + 
                                 "-fx-max-height: 150px;");
                                 aboutUs.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        HBox row1 = new HBox(40, lrtButton, bandaraButton, mrtButton, lokalButton);
+        HBox row1 = new HBox(40, lrtButton, mrtButton);
         HBox row2 = new HBox(40, logOut, aboutUs);
 
         row1.setAlignment(Pos.CENTER);
         row2.setAlignment(Pos.CENTER);
+        selectTrainServiceVBox.getChildren().addAll(backgroundImageView);
         selectTrainServiceVBox.getChildren().addAll(row1, row2);
-        Insets margin = new Insets(0, 0, 50, 0); 
+        Insets margin = new Insets(0, 0, 50, 0);
         VBox.setMargin(row2, margin);
-
         return selectTrainServiceVBox;
     }
 
@@ -314,19 +298,7 @@ public class App extends Application {
         return trainLokal;
     }
 
-    private Pane createTrainBandara(Stage primaryStage) {
-        Pane trainLokal = new Pane();
-
-        return trainLokal;
-    }
-
     private Pane createTrainMRT(Stage primaryStage) {
-        Pane trainLokal = new Pane();
-
-        return trainLokal;
-    }
-
-    private Pane createTrainLokal(Stage primaryStage) {
         Pane trainLokal = new Pane();
 
         return trainLokal;
