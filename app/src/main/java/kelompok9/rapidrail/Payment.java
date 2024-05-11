@@ -44,6 +44,6 @@ public class Payment extends Ticket {
 
     @Override
     public String printTicket() {
-        throw new UnsupportedOperationException("implemented method 'printTicket'");
+        throw new UnsupportedOperationException("Unimplemented method 'printTicket'");
     }
 }
