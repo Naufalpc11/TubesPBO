@@ -41,9 +41,4 @@ public class Payment extends Ticket {
         System.out.println("ATM Number: " + atmNumber);
         System.out.println("Total Price : " );
     }
-
-    @Override
-    public String printTicket() {
-        throw new UnsupportedOperationException("Unimplemented method 'printTicket'");
-    }
 }
