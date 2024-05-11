@@ -41,17 +41,4 @@ public class Train {
         return seatType;
     }
 
-    public void showDescriptionOfTrain() {
-        System.out.println(getTrainName() + "(Mass Rapid Transit) Train");
-        System.out.println("Seat Slot : " + getSeatSlot());
-        System.out.println("Available Seat Types : " + getSeatType());
-        System.out.println("Maximum Speed : 110 KM/h");
-        System.out.println("Carriage : 6 Carriages");
-        System.out.println("---------------------------------------------------------");
-        System.out.println(getTrainName() + "(Light Rapid Transit) Train");
-        System.out.println("Seat Slot : " + getSeatSlot());
-        System.out.println("Available Seat Types : " + getSeatType());
-        System.out.println("Maximum Speed : 90 KM/h");
-        System.out.println("Carriage : 2-4 Carriages");
-    }
 }
