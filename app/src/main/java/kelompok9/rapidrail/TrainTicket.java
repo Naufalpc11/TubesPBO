@@ -28,7 +28,7 @@ public class TrainTicket extends Ticket{
                 ticketInfo += "Customer Name: " + getCostumerName() + "\n";
                 ticketInfo += "Price: $" + getPrice() + "\n";
 
-                writer.write(ticketInfo); // Menulis informasi tiket ke file
+                writer.write(ticketInfo);
 
                 System.out.println("Ticket details written to file: " + fileName);
                 return ticketInfo;
