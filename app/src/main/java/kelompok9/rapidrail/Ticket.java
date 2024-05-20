@@ -9,17 +9,19 @@ public abstract class Ticket {
         this.price = price;
     }
 
+    public void setTickedId(String ticketId) {
+        this.ticketId = ticketId;
+    }
     public String getTicketId() {
         return ticketId;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
+    public double getPrice() {
+        return price;
+    }
 
-    public abstract String printTicket();
+    public abstract void printInformation();
 }
