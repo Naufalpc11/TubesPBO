@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #9bafd9 0.0%, #103783 100.0%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" maxHeight="480.0" maxWidth="720.0" minHeight="480.0" minWidth="720.0" prefHeight="480.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-effect: dropshadow(gaussian, #ffffff5a, 16, 0, 0, 0);" text="Halaman Pembayaran" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Inter SemiBold" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="32.0" />
+               </VBox.margin>
+            </Label>
+            <VBox maxHeight="160.0" maxWidth="360.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, white, F2F4F7); -fx-background-radius: 24; -fx-border-color: linear-gradient(from 0% 0% to 0% 100%, EAECF0, D0D5DD); -fx-border-radius: 24; -fx-effect: dropshadow(gaussian, #0000002a, 24, 0, 0, 10);" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="36.0" />
+               </VBox.margin>
+               <children>
+                  <Label maxWidth="1.7976931348623157E308" text="Total Pembayaran :" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Inter Medium" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="24.0" right="24.0" top="24.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="**Hasil Total Pembayaran Disini**" textFill="#464646" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Inter Medium" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="12.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <Label maxWidth="270.0" text="Masukkan Nomor Rekening" textFill="#d0d5dd" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Inter Medium" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="38.0" />
+               </VBox.margin>
+            </Label>
+            <TextField maxWidth="280.0" minHeight="24.0" promptText="Masukkan Nomor Rekening" style="-fx-background-color: white; -fx-background-radius: 24; -fx-border-color: #D0D5DD; -fx-border-radius: 24;" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Inter Medium" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Button minWidth="280.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to bottom, #3d7fff, #4b5dff); -fx-background-radius: 24; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0.0, 3); -fx-border-color: #3961d9; -fx-border-width: 1; -fx-border-radius: 24; -fx-padding: 8 16 8 16;" text="Bayar" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="42.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Inter SemiBold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
